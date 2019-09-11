@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cliente;
 use Illuminate\Http\Request;
+use App\Region;
 
 class ClienteController extends Controller
 {
@@ -14,7 +15,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $clientes= Cliente::all();
+               return view('administrador_clientes', compact('clientes'));
     }
 
     /**
@@ -36,6 +38,7 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         //
+        
     }
 
     /**
@@ -55,9 +58,12 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente $cliente)
+    public function edit($idCliente)
     {
-        //
+        $cliente=Cliente::find($idCliente);
+        $cliente_region=Region::where('id',$cliente->idRegion)->first();
+        $regiones=Region::all()->where('id','!=',$cliente->idRegion);
+        return view('edicion_cliente',compact('cliente','regiones', 'cliente_region'));
     }
 
     /**
@@ -67,9 +73,26 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request)
     {
         //
+        try{
+
+        
+        $cliente=Cliente::find($request->id_cliente);
+        $cliente->nombreCli=$request->nombre_cliente;
+
+        $cliente->apellidoCli=$request->apellido_cliente;
+        $cliente->idRegion=$request->regiones;
+        $cliente->save();
+        
+        return redirect('/');
+
+        }catch(Exception $e){
+            echo $e->getMessage();
+        }
+
+
     }
 
     /**

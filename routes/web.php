@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'ClienteController@index');
+
+Route::get('editar/{id}/', 'ClienteController@edit')->name('cliente.edit');
+Route::post('update', 'ClienteController@update')->name('cliente.update');
