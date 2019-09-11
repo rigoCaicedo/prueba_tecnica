@@ -9,6 +9,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+        <script src="{{asset('js/validaciones.js')}}"></script>
         <!-- Styles -->
         <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
         <style>

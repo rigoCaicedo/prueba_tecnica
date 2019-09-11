@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cliente;
 use Illuminate\Http\Request;
 use App\Region;
+use App\Factura;
 
 class ClienteController extends Controller
 {
@@ -27,6 +28,8 @@ class ClienteController extends Controller
     public function create()
     {
         //
+        $regiones=Region::all();
+        return view('create',compact('regiones'));
     }
 
     /**
@@ -38,6 +41,13 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         //
+        $nuevo_cliente= new Cliente();
+        $nuevo_cliente->nombreCli=$request->nombre_cliente;
+        $nuevo_cliente->apellidoCli=$request->apellido_cliente;
+        $nuevo_cliente->idRegion=$request->regiones;
+        $nuevo_cliente->save();
+        
+        return redirect('/');
         
     }
 
@@ -63,7 +73,10 @@ class ClienteController extends Controller
         $cliente=Cliente::find($idCliente);
         $cliente_region=Region::where('id',$cliente->idRegion)->first();
         $regiones=Region::all()->where('id','!=',$cliente->idRegion);
-        return view('edicion_cliente',compact('cliente','regiones', 'cliente_region'));
+
+        $facturas=Factura::select('facturas.*')->where('idCliente',$idCliente)->get();
+
+        return view('edicion_cliente',compact('cliente','regiones', 'cliente_region','facturas'));
     }
 
     /**
@@ -85,7 +98,7 @@ class ClienteController extends Controller
         $cliente->apellidoCli=$request->apellido_cliente;
         $cliente->idRegion=$request->regiones;
         $cliente->save();
-        
+
         return redirect('/');
 
         }catch(Exception $e){
@@ -101,8 +114,9 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente $cliente)
+    public function destroy($idCliente)
     {
-        //
+        $cliente= Cliente::find($idCliente)->delete();
+        return redirect('/');
     }
 }

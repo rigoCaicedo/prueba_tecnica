@@ -1,7 +1,13 @@
 @extends('app')
 	@section('content')
 		<h3>CRUD</h3>
+					<div class="justify-content-center">
+				<a href="{{ route('cliente.create')}}"><input type="button" name="crear" value="Nuevo cliente"></a>
+				<a href="{{ route('cotizacion.create')}}"><input type="button" name="crear" value="Nueva Cotizacion"></a>
+			</div>
 		<div class="row d-flex justify-content-center">
+
+			<br>
 			<table border="1">
 				<thead>
 		          <tr>
@@ -9,8 +15,8 @@
 		            <th>Nombres</th>
 		            <th>Apellidos</th>
 		            <th>Region</th>
-		            <th>Eliminar</th>
-		            <th>Actualizar</th>
+		            <th>Borrar</th>
+		            <th>Editar</th>
 		          </tr>
 		        </thead>
 		        <tbody>
@@ -21,7 +27,7 @@
 		        		<td>{{$cliente->apellidoCli}}</td>
 		        		<td>{{$cliente->idRegion}}</td>
 		        		<td>
-		        			<a href="#" name="btn_eliminar" data-id="{{$cliente->id}}" class="btn btn-warning" data-toggle="tooltip" data-placement="right" data-original-title="Actualizar archivo">
+		        			<a href="{{ route('cliente.destroy',$cliente->id) }}" name="btn_eliminar" data-id="{{$cliente->id}}" class="btn btn-warning" data-toggle="tooltip" data-placement="right" data-original-title="Actualizar archivo">
 		        			</a>
 		        		</td>
 		        		<td>
